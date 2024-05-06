@@ -4,6 +4,7 @@ from rich.console import Console
 import pyperclip
 from typing import List
 import base64
+import subprocess
 
 
 def encode_image(image_path):
@@ -167,8 +168,7 @@ def process_text(input_file: str, prompt: str, api_key: str, max_tokens: int) ->
         if 'choices' in response_json and 'message' in response_json["choices"][0]:
             message = response_json["choices"][0]["message"]["content"]
 
-    Console().print(message, style="deep_pink3")
-
     pyperclip.copy(message)
+    subprocess.run(["pbpaste", "|", "bat", "-l", "latex"])
 
     return message
