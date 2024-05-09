@@ -28,6 +28,7 @@ import pyperclip
         [
             "assertion_reason",
             "mcq",
+            "mcq_list",
             "mcq_solution",
             "subjective",
             "match",

@@ -1,4 +1,4 @@
-from .prompts import prompt_assertion_reason, prompt_mcq, prompt_mcq_solution, prompt_subjective, prompt_match, prompt_comprehension, prompt_answer, prompt_solution
+from .prompts import prompt_assertion_reason, prompt_mcq, prompt_mcq_list, prompt_mcq_solution, prompt_subjective, prompt_match, prompt_comprehension, prompt_answer, prompt_solution
 
 import click
 import pyperclip
@@ -38,6 +38,8 @@ def copyprompt(prompt):
         pyperclip.copy(prompt_assertion_reason)
     elif prompt == "mcq":
         pyperclip.copy(prompt_mcq)
+    elif prompt == "mcq_list":
+        pyperclip.copy(prompt_mcq_list)
     elif prompt == "mcq_solution":
         pyperclip.copy(prompt_mcq_solution)
     elif prompt == "subjective":

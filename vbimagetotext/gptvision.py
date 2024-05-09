@@ -28,6 +28,7 @@ from .choice_option import ChoiceOption
         [
             "assertion_reason",
             "mcq",
+            "mcq_list",
             "mcq_solution",
             "subjective",
             "match",

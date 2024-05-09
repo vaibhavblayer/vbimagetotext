@@ -8,8 +8,27 @@ Please analyze the image provided and extract any questions present in the text.
 Please provide only the enumerated part of the LaTeX file, not the whole LaTeX file.
 """
 
-
 prompt_mcq = r"""
+Please analyze the image provided and extract text from it and format it into latex. For question use \item , if there are any diagrams present, place it after \item part. For the options use tasks environment.
+Use this code as reference for multiple-choice questions
+    \item This is a question.
+        \begin{center}
+            \begin{tikzpicture}
+                \node at (0, 0) {Diagram};
+            \end{tikzpicture}
+        \end{center}
+        \begin{tasks}(2)
+            \task Shorter Option 1
+            \task Shorter Option 2
+            \task Shorter Option 3\ans
+            \task Shorter Option 4
+        \end{tasks}
+
+Please provide only the part above formatted of the LaTeX file, not the whole LaTeX document.
+"""
+
+
+prompt_mcq_list = r"""
 Please analyze the image provided and extract any questions present in the text. Format the questions in LaTeX format. If there are any diagrams present, please create only the TikZ environment with a node "Diagram" only, in the center environment. If there are any multiple-choice questions, please put the options in a tasks environment.
 Use this code as reference for multiple-choice questions
 \begin{enumerate}
@@ -157,6 +176,8 @@ def switch_prompt(value):
         return prompt_match
     elif value == "mcq":
         return prompt_mcq
+    elif value == "mcq_list":
+        return prompt_mcq_list
     elif value == "mcq_solution":
         return prompt_mcq_solution
     elif value == "subjective":

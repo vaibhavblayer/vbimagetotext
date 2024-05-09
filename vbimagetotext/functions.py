@@ -105,13 +105,13 @@ def process_images(image_names: List[str], prompt: str, api_key: str, max_tokens
     pattern = r"```latex(.*?)```"
     matches = re.findall(pattern, message, re.DOTALL)
 
-    Console().print(message, style="deep_pink3")
-
     if matches:
         pyperclip.copy(matches[0])
+        subprocess.run(["pbpaste ", "| ", "bat ", "-l ", "latex"])
         return matches[0]
     else:
         pyperclip.copy(message)
+        subprocess.run(["pbpaste ", "| ", "bat ", "-l ", "latex"])
         return message
 
 
