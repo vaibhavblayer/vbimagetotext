@@ -93,8 +93,22 @@ Extract Questions from Image and Format in LaTeX
 Please analyze the image provided and extract any questions present in the text. Format the questions in LaTeX format. If there are any diagrams present, please create only the TikZ environment with a node "Diagram" only, put it within the center environment. For horizontal line use \underline{\hspace{2.5 cm}}. Please provide only the enumerated part of the LaTeX file, not the whole LaTeX file.
 """
 
+prompt_subjective_list = r"""
+Extract Questions from Image and Format in LaTeX
+Please analyze the image provided and extract any questions present in the text. Format the questions in LaTeX format. If there are any diagrams present, please create only the TikZ environment with a node "Diagram" only, put it within the center environment. For horizontal line use \underline{\hspace{2.5 cm}}. Please provide only the enumerated part of the LaTeX file, not the whole LaTeX file.
+"""
+
 prompt_match = r"""
-Please analyze the image provided and extract any questions present in the text. Format the questions in LaTeX format. If there are any diagrams present, please create only the TikZ environment with a node "Diagram" only. If there are any multiple-choice questions, please put the options in a tasks environment. If there are any match-type or list type questions, please create a table use this code as reference 
+Please analyze the image provided and extract the texts. Format these texts in LaTeX format like this, first put question in \item command, then diagram in tikz env nested within center env if there is any diagram present, then make the table for list/column/anything, then after put the options in a tasks environment. Use this below code as reference:
+
+\item This is a sample question for matching type questions. There are two columns. Match column I with coulmn II. 
+
+\begin{center}
+    \begin{tikzpicture}
+        \pic {frame=5cm};
+    \end{tikzpicture}
+\end{center}
+
 \begin{center}
     \renewcommand{\arraystretch}{2}
     \begin{table}[h]
@@ -111,39 +125,51 @@ Please analyze the image provided and extract any questions present in the text.
         \end{tabular}
     \end{table}
 \end{center}
-Please provide only the enumerated part of the LaTeX file, not the whole LaTeX file.
+
+\begin{tasks}(2)
+    \task $P \rightarrow 1$, $Q \rightarrow 2$, $R \rightarrow 3$, $S \rightarrow 4$
+    \task $P \rightarrow 2$, $Q \rightarrow 1$, $R \rightarrow 4$, $S \rightarrow 3$
+    \task $P \rightarrow 3$, $Q \rightarrow 4$, $R \rightarrow 1$, $S \rightarrow 2$
+    \task $P \rightarrow 4$, $Q \rightarrow 3$, $R \rightarrow 2$, $S \rightarrow 1$
+\end{tasks}
+
+Please provide only the above described part of the LaTeX file, not the whole LaTeX file.
 """
 
 
 prompt_comprehension = r"""
-Please analyze the image provided and extract any questions present in the text. Format the questions in LaTeX format. If there are any diagrams present in any type of question, please create only the TikZ environment with a node "Diagram" only in center environment. If there are any multiple-choice questions, please put the options in a tasks environment. If there are any comprehension type/Paragraph type/Passage type/Question Stem type questions, use this code as reference  
+Please analyze the image provided and extract the texts. Format these texts in LaTeX format like this, first put a title in center env use \textsc for passage/comprehension/Paragraph/Question Stem title, then put the paragraph text without any env, then diagram in tikz env nested within center env if there is any diagram present, then questions each in \item command and for each question put the options in a tasks environment. Use this code as reference  
+
 \begin{center}
     \textsc{Comprehension-II}
 \end{center}
+
 A uniform wire frame of linear mass density $\lambda$ having three sides each of length $2a$ is kept on a smooth horizontal surface. An impulse $J$ is applied at one end as shown in the figure. $P$ is the midpoint of $AB$. Now answer the following questions. 
+
 \begin{center}
     \begin{tikzpicture}
         \pic[rotate=180] at (0, 0) {frame=3cm};
     \end{tikzpicture}
 \end{center} 
-\begin{enumerate}
-    \item The angular velocity of the system just after the impulse is
-        \begin{tasks}(4)
-            \task $\dfrac{3J}{22\lambda a^2}$\ans
-            \task $\dfrac{J}{22\lambda a^2}$
-            \task $\dfrac{2J}{22\lambda a^2}$
-            \task $\dfrac{4J}{22\lambda a^2}$
-        \end{tasks}
 
-    \item The velocity of point $P$ just after the impulse is
-        \begin{tasks}(4)
-            \task $\dfrac{J}{\lambda a}\hat{j}$
-            \task $\dfrac{J}{6\lambda a}\hat{j}$
-            \task $\dfrac{J}{\lambda a}\left(\dfrac{2}{11}\hat{i} + \dfrac{1}{6}\hat{j}\right)$
-            \task $\dfrac{J}{\lambda a}\left(\dfrac{1}{11}\hat{i} + \dfrac{1}{6}\hat{j}\right)$\ans
-        \end{tasks} 
-\end{enumerate}
-Please provide only the comprehension and enumerate part of the LaTeX file, not the whole LaTeX file.
+\item The angular velocity of the system just after the impulse is
+    \begin{tasks}(4)
+        \task $\dfrac{3J}{22\lambda a^2}$\ans
+        \task $\dfrac{J}{22\lambda a^2}$
+        \task $\dfrac{2J}{22\lambda a^2}$
+        \task $\dfrac{4J}{22\lambda a^2}$
+    \end{tasks}
+
+\item The velocity of point $P$ just after the impulse is
+    \begin{tasks}(4)
+        \task $\dfrac{J}{\lambda a}\hat{j}$
+        \task $\dfrac{J}{6\lambda a}\hat{j}$
+        \task $\dfrac{J}{\lambda a}\left(\dfrac{2}{11}\hat{i} + \dfrac{1}{6}\hat{j}\right)$
+        \task $\dfrac{J}{\lambda a}\left(\dfrac{1}{11}\hat{i} + \dfrac{1}{6}\hat{j}\right)$\ans
+    \end{tasks} 
+
+
+Please provide only the above formatted part of the LaTeX file, not the whole LaTeX file.
 """
 
 
@@ -182,7 +208,9 @@ def switch_prompt(value):
         return prompt_mcq_solution
     elif value == "subjective":
         return prompt_subjective
-    elif value == "comprension":
+    elif value == "subjective_list":
+        return prompt_subjective_list
+    elif value == "comprehension":
         return prompt_comprehension
     elif value == "assertion_reason":
         return prompt_assertion_reason

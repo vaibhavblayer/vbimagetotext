@@ -31,6 +31,7 @@ from .choice_option import ChoiceOption
             "mcq_list",
             "mcq_solution",
             "subjective",
+            "subjective_list",
             "match",
             "comprehension",
             "answer",

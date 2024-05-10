@@ -107,11 +107,11 @@ def process_images(image_names: List[str], prompt: str, api_key: str, max_tokens
 
     if matches:
         pyperclip.copy(matches[0])
-        subprocess.run(["pbpaste ", "| ", "bat ", "-l ", "latex"])
+        subprocess.run(["pbpaste", "|", "bat", "-l", "latex"])
         return matches[0]
     else:
         pyperclip.copy(message)
-        subprocess.run(["pbpaste ", "| ", "bat ", "-l ", "latex"])
+        subprocess.run(["pbpaste", "|", "bat", "-l", "latex"])
         return message
 
 
