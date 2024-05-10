@@ -107,11 +107,11 @@ def process_images(image_names: List[str], prompt: str, api_key: str, max_tokens
 
     if matches:
         pyperclip.copy(matches[0])
-        subprocess.run(["pbpaste", "|", "bat", "-l", "latex"])
+        subprocess.Popen("pbpaste | bat -l latex", shell=True)
         return matches[0]
     else:
         pyperclip.copy(message)
-        subprocess.run(["pbpaste", "|", "bat", "-l", "latex"])
+        subprocess.Popen("pbpaste | bat -l latex", shell=True)
         return message
 
 
@@ -131,6 +131,8 @@ def process_text(input_file: str, prompt: str, api_key: str, max_tokens: int) ->
     """
     with open(input_file, 'r') as file:
         input_text = file.read()
+
+    calculate_cost(input_text)
 
     headers = {
         "Content-Type": "application/json",
@@ -168,7 +170,27 @@ def process_text(input_file: str, prompt: str, api_key: str, max_tokens: int) ->
         if 'choices' in response_json and 'message' in response_json["choices"][0]:
             message = response_json["choices"][0]["message"]["content"]
 
+            calculate_cost(message, 30.0)
+
     pyperclip.copy(message)
-    subprocess.run(["pbpaste", "|", "bat", "-l", "latex"])
+    subprocess.Popen("pbpaste | bat -l latex", shell=True)
 
     return message
+
+
+def calculate_cost(input_text: str, cost_per_million_tokens: float = 10.0, exchange_rate: float = 84, tax_rate: float = 0.18) -> None:
+    """
+    Calculates and prints the cost of the API call in rupees, including tax.
+
+    Args:
+        input_text (str): The input text.
+        cost_per_million_tokens (float, optional): The cost per million tokens. Defaults to 60.0.
+        exchange_rate (float, optional): The exchange rate from dollars to rupees. Defaults to 74.5.
+        tax_rate (float, optional): The tax rate. Defaults to 0.18.
+    """
+    input_tokens = len(input_text.split())
+    print(f"Number of input tokens: {input_tokens}")
+    cost_in_dollars = (input_tokens / 1000000) * cost_per_million_tokens
+    cost_in_rupees = cost_in_dollars * exchange_rate
+    cost_with_tax = cost_in_rupees * (1 + tax_rate)
+    print(f"Cost of API call including tax: ₹{cost_with_tax:.2f}")

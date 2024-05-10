@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vbimagetotext"
-version = "0.1.14"
+version = "0.1.15"
 description = "A cli tool to convert image to text using openai's GPT-Vision API and google's Gemini Vision API"
 authors = ["vaibhavblayer <vaibhavblayer@gmail.com>"]
 readme = "README.md"
