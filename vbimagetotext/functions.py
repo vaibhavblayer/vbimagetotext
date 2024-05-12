@@ -93,9 +93,7 @@ def process_images(image_names: List[str], prompt: str, api_key: str, max_tokens
 
         if 'choices' in response_json and 'message' in response_json["choices"][0]:
             message = response_json["choices"][0]["message"]["content"]
-            calculate_image_cost(image_names)
-            calculate_input_cost(prompt)
-            calculate_output_cost(message)
+
             print(f'\n\tTotal cost: {calculate_image_cost(
                 image_names) + calculate_input_cost(prompt) + calculate_output_cost(message):.2f}\n')
 
@@ -140,7 +138,7 @@ def process_text(input_file: str, prompt: str, api_key: str, max_tokens: int) ->
     with open(input_file, 'r') as file:
         input_text = file.read()
 
-    calculate_input_cost(input_text)
+    # calculate_input_cost(input_text)
 
     headers = {
         "Content-Type": "application/json",
@@ -178,7 +176,9 @@ def process_text(input_file: str, prompt: str, api_key: str, max_tokens: int) ->
         if 'choices' in response_json and 'message' in response_json["choices"][0]:
             message = response_json["choices"][0]["message"]["content"]
 
-            calculate_output_cost(message)
+            # calculate_output_cost(message)
+            print(f'\n\tTotal cost: {calculate_input_cost(
+                input_text) + calculate_output_cost(message):.2f}\n')
 
     pyperclip.copy(message)
     subprocess.Popen("pbpaste | bat -l latex", shell=True)
