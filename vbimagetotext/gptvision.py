@@ -35,11 +35,29 @@ from .choice_option import ChoiceOption
             "match",
             "comprehension",
             "answer",
+            "subjective_irodov",
             "prompt",
         ],
         case_sensitive=False),
     prompt=True,
     default=2,
+    show_default=True,
+    help="Prompt to use for the completion",
+)
+@click.option(
+    "-m",
+    "--model",
+    cls=ChoiceOption,
+    type=click.Choice(
+        [
+            "gpt-4o",
+            "gpt-4-turbo",
+            "gpt-4-turbo-preview",
+            "gpt-4-vision-preview",
+        ],
+        case_sensitive=False),
+    prompt=True,
+    default=1,
     show_default=True,
     help="Prompt to use for the completion",
 )
@@ -50,7 +68,7 @@ from .choice_option import ChoiceOption
     show_default=True,
     help="The maximum number of tokens to generate.",
 )
-def gptvision(image, prompt, max_tokens):
+def gptvision(image, prompt, model, max_tokens):
     """
     Process images using OpenAI's GPT-4 Vision and extract LaTeX code from the response.
     """
@@ -65,4 +83,4 @@ def gptvision(image, prompt, max_tokens):
         prompt = click.prompt("Please enter your custom prompt", type=str)
 
     prompt = switch_prompt(prompt)
-    process_images(image, prompt, api_key, max_tokens)
+    process_images(image, prompt, model, api_key, max_tokens)

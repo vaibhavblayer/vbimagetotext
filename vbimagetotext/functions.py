@@ -46,7 +46,7 @@ def create_image_dicts(image_names: List[str]) -> List[dict]:
     return image_dicts
 
 
-def process_images(image_names: List[str], prompt: str, api_key: str, max_tokens: int) -> str:
+def process_images(image_names: List[str], prompt: str, model: str, api_key: str, max_tokens: int) -> str:
     """
     Processes images using OpenAI's GPT-4 Vision, extracts LaTeX code from the response,
     copies the first match to the clipboard, and prints the message in deep pink color.
@@ -67,7 +67,7 @@ def process_images(image_names: List[str], prompt: str, api_key: str, max_tokens
     }
 
     payload = {
-        "model": "gpt-4-vision-preview",
+        "model": model,
         "messages": [
             {
                 "role": "user",
@@ -121,7 +121,7 @@ def process_images(image_names: List[str], prompt: str, api_key: str, max_tokens
         return message
 
 
-def process_text(input_file: str, prompt: str, api_key: str, max_tokens: int) -> str:
+def process_text(input_file: str, prompt: str, model: str, api_key: str, max_tokens: int) -> str:
     """
     Processes text using OpenAI's GPT-4, extracts LaTeX code from the response,
     copies the first match to the clipboard, and prints the message in deep pink color.
@@ -146,7 +146,7 @@ def process_text(input_file: str, prompt: str, api_key: str, max_tokens: int) ->
     }
 
     payload = {
-        "model": "gpt-4-vision-preview",
+        "model": model,
         "messages": [
             {
                 "role": "user",

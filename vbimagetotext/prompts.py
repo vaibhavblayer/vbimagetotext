@@ -101,6 +101,23 @@ Please analyze the image provided and extract the texts from it and format it in
 Please provide only the part above formatted of the LaTeX file, not the whole LaTeX document.
 """
 
+prompt_subjective_irodov = r"""
+Please analyze the image provided and extract the texts from it and format it into latex. For question use \item , if there are any diagrams present, place it after \item part. If there are subquestions put them in enumerate env just below diagram or main question if diagram not available. Use this code as reference:
+
+\item This is a sample question for subjective type.
+    \begin{center}
+        \begin{tikzpicture}
+            \node at (0, 0) {Diagram};
+        \end{tikzpicture}
+    \end{center}
+    \begin{enumerate}
+        \item This is a subquestion.
+        \item This is another subquestion.
+    \end{enumerate}
+
+Please provide only the part above formatted of the LaTeX file, not the whole LaTeX document.
+"""
+
 prompt_subjective_list = r"""
 Extract Questions from Image and Format in LaTeX
 Please analyze the image provided and extract any questions present in the text. Format the questions in LaTeX format. If there are any diagrams present, please create only the TikZ environment with a node "Diagram" only, put it within the center environment. For horizontal line use \underline{\hspace{2.5 cm}}. Please provide only the enumerated part of the LaTeX file, not the whole LaTeX file.
@@ -226,5 +243,7 @@ def switch_prompt(value):
         return prompt_answer
     elif value == "solution":
         return prompt_solution
+    elif value == "subjective_irodov":
+        return prompt_subjective_irodov
     else:
         return value
