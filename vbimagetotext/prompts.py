@@ -241,7 +241,7 @@ Please provide only the solution part of the LaTeX file, not the whole LaTeX fil
 """
 
 prompt_solution_irodov = r"""
-Please analyze the image provided and extract the texts. Format these texts in LaTeX format like this, first put a diagram in tikz env nested within center env if there is any diagram present, then put solution in solution environment, inside align* env use \intertext command for text inside solution. Use this code as reference  
+Please analyze the image provided and extract the texts. Format these texts in LaTeX format like this, first put a diagram in tikz env nested within center env if there is any diagram present, dont't code the diagram just put the below sample tikzpicture code instead, then put solution in solution environment, inside align* env use \intertext command for text inside solution, don't put any blank line inside align* env as it will cause rendering problem, use \tag command for numbering equations. Use this code as reference  
 
 \begin{solution}
     \begin{center}

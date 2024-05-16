@@ -80,4 +80,4 @@ def gptloop(ctx, image, ranges, prompt, model):
         image_path = os.path.join(dirname, f"{basename}_{i}{extension}")
         ctx.invoke(gptvision, image=[image_path],
                    prompt=prompt, model=model, max_tokens=1000)
-        subprocess.run(f"pbpaste > ./src/src_tex/problem_{i}.tex", shell=True)
+        subprocess.run(f"pbpaste >> ./src/src_tex/problem_{i}.tex", shell=True)
