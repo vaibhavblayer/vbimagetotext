@@ -6,6 +6,7 @@ import pyperclip
 from typing import List
 import base64
 import subprocess
+import os
 from .token_cost_calculations import calculate_image_cost, calculate_input_cost, calculate_output_cost
 
 
@@ -60,6 +61,7 @@ def process_images(image_names: List[str], prompt: str, model: str, api_key: str
         str: First match of the LaTeX code in the response.
     """
     image_dicts = create_image_dicts(image_names)
+    title = os.path.basename(image_names[0]).split('.')[0] + ".tex"
 
     headers = {
         "Content-Type": "application/json",
@@ -113,11 +115,13 @@ def process_images(image_names: List[str], prompt: str, model: str, api_key: str
 
     if matches:
         pyperclip.copy(matches[0])
-        subprocess.Popen("pbpaste | bat -l latex", shell=True)
+        subprocess.Popen(
+            f'pbpaste | bat -l latex --file-name "{title}"', shell=True)
         return matches[0]
     else:
         pyperclip.copy(message)
-        subprocess.Popen("pbpaste | bat -l latex", shell=True)
+        subprocess.Popen(
+            f'pbpaste | bat -l latex --file-name "{title}"', shell=True)
         return message
 
 
@@ -137,6 +141,8 @@ def process_text(input_file: str, prompt: str, model: str, api_key: str, max_tok
     """
     with open(input_file, 'r') as file:
         input_text = file.read()
+
+    title = os.path.basename(input_file).split('.')[0] + ".tex"
 
     # calculate_input_cost(input_text)
 
@@ -181,6 +187,7 @@ def process_text(input_file: str, prompt: str, model: str, api_key: str, max_tok
                 input_text) + calculate_output_cost(message):.2f}\n')
 
         pyperclip.copy(message)
-        subprocess.Popen("pbpaste | bat -l latex", shell=True)
+        subprocess.Popen(
+            f'pbpaste | bat -l latex --file-name "{title}"', shell=True)
 
         return message
