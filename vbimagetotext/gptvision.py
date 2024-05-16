@@ -36,6 +36,7 @@ from .choice_option import ChoiceOption
             "comprehension",
             "answer",
             "subjective_irodov",
+            "solution_irodov",
             "prompt",
         ],
         case_sensitive=False),

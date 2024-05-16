@@ -240,6 +240,28 @@ Try not to use any derived formula if possible, go with fundamentals and basics 
 Please provide only the solution part of the LaTeX file, not the whole LaTeX file.
 """
 
+prompt_solution_irodov = r"""
+Please analyze the image provided and extract the texts. Format these texts in LaTeX format like this, first put a diagram in tikz env nested within center env if there is any diagram present, then put solution in solution environment, inside align* env use \intertext command for text inside solution. Use this code as reference  
+
+\begin{solution}
+    \begin{center}
+        \begin{tikzpicture}
+            \pic at (0, 0) {frame=3cm};
+        \end{tikzpicture}
+    \end{center}
+    
+    \begin{align*}
+        \intertext{Momentum of the ball will change only along the normal($x$ direction).}
+        \vec{J} &= \vec{p}_f-\vec{p}_i\\
+        &= m\vec{v}_f-m\vec{v}_i\\
+        &= m\left(\dfrac{3}{4}v_0\hat{i}\right)-m\left(v_0\hat{i}\right)\\
+        &= -\dfrac{1}{4}mv_0\hat{i}\\
+        &= -\dfrac{5}{4}mv_0\hat{i}
+        \interttext{Option (a) is correct.}
+    \end{align*}
+\end{solution}
+"""
+
 
 def switch_prompt(value):
     if value == "match":
@@ -264,5 +286,7 @@ def switch_prompt(value):
         return prompt_solution
     elif value == "subjective_irodov":
         return prompt_subjective_irodov
+    elif value == "solution_irodov":
+        return prompt_solution_irodov
     else:
         return value
