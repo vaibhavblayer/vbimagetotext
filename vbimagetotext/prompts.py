@@ -221,6 +221,25 @@ Try not to use any derived formula if possible, go with fundamentals and basics 
 Please provide only the solution part of the LaTeX file, not the whole LaTeX file.
 """
 
+prompt_solution_with_concept = r"""
+Following problem in in latex format, Please analyze the following question and if possible solve the problem and provide the solution in LaTeX format as well. Use this code as reference for solution
+\begin{solution}
+    \begin{align*}
+        \intertext{Momentum of the ball will change only along the normal($x$ direction).}
+        \vec{J} &= \vec{p}_f-\vec{p}_i\\
+        &= m\vec{v}_f-m\vec{v}_i\\
+        &= m\left(\dfrac{3}{4}v_0\hat{i}\right)-m\left(v_0\hat{i}\right)\\
+        &= -\dfrac{1}{4}mv_0\hat{i}\\
+        &= -\dfrac{5}{4}mv_0\hat{i}
+        \interttext{Option (a) is correct.}
+    \end{align*}
+\end{solution}
+
+Try not to use any derived formula if possible, go with fundamentals and basics also do not put numerical value at every step derive expression symbolically then at the end put numerical values. Also if possible use align* environment for solutions. You can add descriptive text in between using \intertext{} command.
+
+Please provide only the solution part of the LaTeX file, not the whole LaTeX file.
+"""
+
 
 def switch_prompt(value):
     if value == "match":

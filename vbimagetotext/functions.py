@@ -180,7 +180,7 @@ def process_text(input_file: str, prompt: str, model: str, api_key: str, max_tok
             print(f'\n\tTotal cost: {calculate_input_cost(
                 input_text) + calculate_output_cost(message):.2f}\n')
 
-    pyperclip.copy(message)
-    subprocess.Popen("pbpaste | bat -l latex", shell=True)
+        pyperclip.copy(message)
+        subprocess.Popen("pbpaste | bat -l latex", shell=True)
 
-    return message
+        return message
