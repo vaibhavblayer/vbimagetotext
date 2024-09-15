@@ -57,6 +57,7 @@ from .choice_option import ChoiceOption
     type=click.Choice(
         [
             "gpt-4o",
+            "gpt-4o-2024-08-06",
             "gpt-4-turbo",
             "gpt-4-turbo-preview",
             "gpt-4-vision-preview",
@@ -79,5 +80,5 @@ def gptloop(ctx, image, ranges, prompt, model):
         basename = filename.split('_')[0]
         image_path = os.path.join(dirname, f"{basename}_{i}{extension}")
         ctx.invoke(gptvision, image=[image_path],
-                   prompt=prompt, model=model, max_tokens=1000)
+                   prompt=prompt, model=model, max_tokens=2000)
         subprocess.run(f"pbpaste >> ./src/src_tex/problem_{i}.tex", shell=True)

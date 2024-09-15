@@ -52,9 +52,11 @@ from .choice_option import ChoiceOption
     type=click.Choice(
         [
             "gpt-4o",
+            "gpt-4o-2024-08-06",
             "gpt-4-turbo",
             "gpt-4-turbo-preview",
             "gpt-4-vision-preview",
+            "gpt-4o-mini"
         ],
         case_sensitive=False),
     prompt=True,
@@ -65,7 +67,7 @@ from .choice_option import ChoiceOption
 @click.option(
     "--max-tokens",
     type=int,
-    default=1000,
+    default=2000,
     show_default=True,
     help="The maximum number of tokens to generate.",
 )
